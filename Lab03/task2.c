@@ -56,4 +56,5 @@ int main()
     replace_str(buffer, "dante", "Shakespeare");
 
     write(fd1, buffer, 734);
+    printf("%s", buffer);
 }
