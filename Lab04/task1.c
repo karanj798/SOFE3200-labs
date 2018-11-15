@@ -8,24 +8,8 @@ int getRandom(int min, int max){
 	return rand() % max;
 }
 
-// Random function returns same number for every run....
-
 void createSentence(char *adjective[], char *noun[]){
-	char *sentence = malloc(sizeof(char) * 100);
-	strcat(sentence, "The ");
-	strcat(sentence, adjective[getRandom(0, 5)]);
-	strcat(sentence, " ");
-	strcat(sentence, adjective[getRandom(0, 5)]);
-	strcat(sentence, " ");
-	strcat(sentence, noun[getRandom(0, 5)]);
-	strcat(sentence, " "); 
-	strcat(sentence, "jumped over the "); 
-	strcat(sentence, adjective[getRandom(0, 5)]); 
-	strcat(sentence, " ");
-	strcat(sentence, noun[getRandom(0, 5)]);
-	strcat(sentence, ".");	
-	printf("%s\n", sentence);
-	free(sentence);
+	printf("The %s %s %s jumped over the %s %s.\n",adjective[getRandom(0, 5)], adjective[getRandom(0, 5)], noun[getRandom(0, 5)], adjective[getRandom(0, 5)], noun[getRandom(0, 5)]);
 }
 
 int main (){
