@@ -7,7 +7,7 @@
 #include <time.h>
 #include <ctype.h>
 
-char *readFile (int bytes){    
+char *readFile (int bytes){ 
     char *buffer = malloc(sizeof(char) * bytes);
     FILE *fp1;
     fp1 = fopen("input.txt", "r");
@@ -21,10 +21,11 @@ char *readFile (int bytes){
             }
             else{
                 strcat(sumBuffer, temp);
-                strcat(sumBuffer, " ");
                 memset(temp, 0, sizeof(temp));
+                
             }
         }
+       strcat(sumBuffer, " ");
     }
     return sumBuffer;
 }
@@ -61,17 +62,19 @@ int main(int argc, char *argv[]) {
     if (res == 0){
         close(fd[0]);
         childBuff = readFile(bytes);
-        int x = write(fd[1], childBuff, sizeof(childBuff));
-        printf("Child: %s\n", childBuff);
-        printf("%d", getSum(childBuff));
+        write(fd[1], childBuff, strlen(childBuff) +1);
+        //printf("Child: %s\n", childBuff);
+        //printf("x : %d => len : %ld\n", x, strlen(childBuff) + 1);
+        
         close(fd[1]);        
     }else{
-        sleep(0);
+        
         close(fd[1]);
-        read(fd[0], parentBuff, sizeof(childBuff));
-        printf("Parent: %s\n", parentBuff);
-        //sum = sum + atoi(sumBuffer);
-        //getSum(parentBuff);
+        sleep(0);
+        read(fd[0], parentBuff, bytes);
+        //printf("%ld\n", sizeof(childBuff));
+        //printf("Parent: %s\n", parentBuff);
+        printf("%d\n", getSum(parentBuff));
         //printf("%s", parentBuff);
         close(fd[0]);
     }
