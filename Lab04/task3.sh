@@ -3,18 +3,26 @@
 # in order to get results to stdout. 
 
 firefox &
-sleep 5
-sudo strace -c firefox 2>&1 | grep syscall
-sudo strace -c firefox 2>&1 | grep openat
-sudo strace -c firefox 2>&1 | grep close
-killall firefox
-# The commands below require the user to close process manually to get the result.
-# sudo strace -c -p $(pidof -s firefox) 2>&1 | grep openat
-# sudo strace -c -p $(pidof -s firefox) 2>&1 | grep close
+sleep 1m
+sudo strace -c -p $(pidof -s firefox) &> firefox.txt
+val=$(cat firefox.txt)
 
-java &
-sleep 5
-sudo strace -c java 2>&1 | grep syscall
-sudo strace -c java 2>&1 | grep openat
-sudo strace -c java 2>&1 | grep close
-killall java
+
+kcalc &
+sleep 1m
+sudo strace -c -p $(pidof -s kcalc) &> kcalc.txt
+val=$(cat kcalc.txt)
+
+clear 
+
+echo Firefox
+echo --------------
+grep errors firefox.txt
+grep openat firefox.txt
+grep close firefox.txt
+
+echo kcalc
+echo --------------
+grep errors kcalc.txt
+grep openat kcalc.txt
+grep close kcalc.txt
